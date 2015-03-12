@@ -58,11 +58,19 @@ function s:makeDefaultBehavior()
   endfor
   "---------------------------------------------------------------------------
   for key in keys(behavs)
-    call add(behavs[key], {
-          \   'command' : g:acp_behaviorKeywordCommand,
-          \   'meets'   : 'acp#meetsForKeyword',
-          \   'repeat'  : 0,
-          \ })
+    if key != 'ruby'
+      call add(behavs[key], {
+            \   'command' : g:acp_behaviorKeywordCommand,
+            \   'meets'   : 'acp#meetsForKeyword',
+            \   'repeat'  : 0,
+            \ })
+    else
+      call add(behavs[key], {
+            \   'command' : g:acp_behaviorKeywordCommandRuby,
+            \   'meets'   : 'acp#meetsForKeyword',
+            \   'repeat'  : 0,
+            \ })
+    endif
   endfor
   "---------------------------------------------------------------------------
   for key in keys(behavs)
@@ -130,17 +138,17 @@ function s:makeDefaultBehavior()
         \   'command' : "\<C-x>\<C-o>",
         \   'meets'   : 'acp#meetsForJavaScriptOmni',
         \   'repeat'  : 0,
-  \})
+        \})
   call add(behavs.coffee, {
         \   'command' : "\<C-x>\<C-o>",
         \   'meets'   : 'acp#meetsForJavaScriptOmni',
         \   'repeat'  : 0,
-  \})
+        \})
   call add(behavs.ls, {
         \   'command' : "\<C-x>\<C-o>",
         \   'meets'   : 'acp#meetsForJavaScriptOmni',
         \   'repeat'  : 0,
-  \})
+        \})
   return behavs
 endfunction
 
@@ -158,6 +166,7 @@ call l9#defineVariableDefault('g:acp_behaviorUserDefinedFunction', '')
 call l9#defineVariableDefault('g:acp_behaviorUserDefinedMeets', '')
 call l9#defineVariableDefault('g:acp_behaviorSnipmateLength', -1)
 call l9#defineVariableDefault('g:acp_behaviorKeywordCommand', "\<C-n>")
+call l9#defineVariableDefault('g:acp_behaviorKeywordCommandRuby', "\<C-x>\<C-u>")
 call l9#defineVariableDefault('g:acp_behaviorKeywordLength', 2)
 call l9#defineVariableDefault('g:acp_behaviorKeywordIgnores', [])
 call l9#defineVariableDefault('g:acp_behaviorFileLength', 0)
