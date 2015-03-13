@@ -82,6 +82,11 @@ function acp#meetsForKeyword(context)
       return 0
     endif
   endfor
+  for ignore in g:acp_behaviorKeywordIgnoreRegex
+    if (matches[1] =~ ignore) == 1
+      return 0
+    endif
+  endfor
   return 1
 endfunction
 
@@ -224,7 +229,7 @@ function acp#onPopupPost()
     endif
   endif
   let s:iBehavs += 1
-  if len(s:behavsCurrent) > s:iBehavs 
+  if len(s:behavsCurrent) > s:iBehavs
     call s:setCompletefunc()
     return printf("\<C-e>%s\<C-r>=acp#onPopupPost()\<CR>",
           \       s:behavsCurrent[s:iBehavs].command)
