@@ -24,6 +24,7 @@ function s:makeDefaultBehavior()
         \   '*'         : [],
         \   'ruby'      : [],
         \   'python'    : [],
+        \   'go'        : [],
         \   'perl'      : [],
         \   'xml'       : [],
         \   'html'      : [],
@@ -58,18 +59,25 @@ function s:makeDefaultBehavior()
   endfor
   "---------------------------------------------------------------------------
   for key in keys(behavs)
-    if key != 'ruby'
-      call add(behavs[key], {
-            \   'command' : g:acp_behaviorKeywordCommand,
-            \   'meets'   : 'acp#meetsForKeyword',
-            \   'repeat'  : 0,
-            \ })
-    else
+    if key == 'ruby'
       call add(behavs[key], {
             \   'command' : g:acp_behaviorKeywordCommandRuby,
             \   'meets'   : 'acp#meetsForKeyword',
             \   'repeat'  : 0,
             \ })
+    elseif key == 'go'
+      call add(behavs[key], {
+            \   'command' : "\<C-x>\<C-o>",
+            \   'meets'   : 'acp#meetsForKeyword',
+            \   'repeat'  : 0,
+            \ })
+    else
+      call add(behavs[key], {
+            \   'command' : g:acp_behaviorKeywordCommand,
+            \   'meets'   : 'acp#meetsForKeyword',
+            \   'repeat'  : 0,
+            \ })
+
     endif
   endfor
   "---------------------------------------------------------------------------
@@ -84,6 +92,12 @@ function s:makeDefaultBehavior()
   call add(behavs.ruby, {
         \   'command' : "\<C-x>\<C-o>",
         \   'meets'   : 'acp#meetsForRubyOmni',
+        \   'repeat'  : 0,
+        \ })
+  "---------------------------------------------------------------------------
+  call add(behavs.go, {
+        \   'command' : "\<C-x>\<C-o>",
+        \   'meets'   : 'acp#meetsForGoOmni',
         \   'repeat'  : 0,
         \ })
   "---------------------------------------------------------------------------
@@ -174,6 +188,7 @@ call l9#defineVariableDefault('g:acp_behaviorFileLength', 0)
 call l9#defineVariableDefault('g:acp_behaviorRubyOmniMethodLength', 0)
 call l9#defineVariableDefault('g:acp_behaviorRubyOmniSymbolLength', 1)
 call l9#defineVariableDefault('g:acp_behaviorPythonOmniLength', 0)
+call l9#defineVariableDefault('g:acp_behaviorGoOmniLength', 0)
 call l9#defineVariableDefault('g:acp_behaviorPerlOmniLength', -1)
 call l9#defineVariableDefault('g:acp_behaviorXmlOmniLength', 0)
 call l9#defineVariableDefault('g:acp_behaviorHtmlOmniLength', 0)

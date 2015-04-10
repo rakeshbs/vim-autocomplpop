@@ -131,6 +131,12 @@ function acp#meetsForPythonOmni(context)
 endfunction
 
 "
+function acp#meetsForGoOmni(context)
+  return has('go') && g:acp_behaviorGoOmniLength >= 0 &&
+        \ a:context =~ '\k\.\k\{' . g:acp_behaviorGoOmniLength . ',}$'
+endfunction
+
+"
 function acp#meetsForPerlOmni(context)
   return g:acp_behaviorPerlOmniLength >= 0 &&
         \ a:context =~ '\w->\k\{' . g:acp_behaviorPerlOmniLength . ',}$'
